@@ -1,0 +1,94 @@
+/* ============================================
+   Main Window
+   ============================================ */
+
+QWidget#mainWindow {
+    background-color: #EEF3F5;
+    color: #263238;
+    font-family: "Segoe UI";
+    font-size: 11pt;
+}
+
+/* ============================================
+   Action Buttons
+   ============================================ */
+
+QPushButton {
+    min-height: 32px;
+    padding: 7px 18px;
+    border-radius: 7px;
+    font-weight: 600;
+}
+
+QPushButton#loadCsvButton {
+    background-color: #2878A8;
+    border: 1px solid #2878A8;
+    color: #FFFFFF;
+}
+
+QPushButton#loadCsvButton:hover {
+    background-color: #246C99;
+    border-color: #246C99;
+}
+
+QPushButton#loadCsvButton:pressed {
+    background-color: #1E5C82;
+    border-color: #1E5C82;
+}
+
+QPushButton#aboutButton {
+    background-color: #FFFFFF;
+    border: 1px solid #C7D5DB;
+    color: #455A64;
+}
+
+QPushButton#aboutButton:hover {
+    background-color: #F7FAFB;
+    border-color: #91B9C8;
+    color: #2878A8;
+}
+
+QPushButton#aboutButton:pressed {
+    background-color: #EAF1F3;
+    border-color: #91B9C8;
+}
+
+/* ============================================
+   Matplotlib Toolbar
+   ============================================ */
+
+QToolBar#graphToolbar {
+    background-color: #FFFFFF;
+    border: 1px solid #D8E1E5;
+    border-radius: 7px;
+    padding: 3px 6px;
+    spacing: 3px;
+}
+
+QToolButton {
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 4px;
+}
+
+QToolButton:hover {
+    background-color: #EEF6F8;
+    border-color: #C6DCE4;
+}
+
+QToolButton:checked,
+QToolButton:pressed {
+    background-color: #DCECF1;
+    border-color: #91B9C8;
+}
+
+/* ============================================
+   Graph Canvas
+   ============================================ */
+
+QWidget#graphCanvas {
+    background-color: #FFFFFF;
+    border: 1px solid #D8E1E5;
+    border-radius: 7px;
+}
