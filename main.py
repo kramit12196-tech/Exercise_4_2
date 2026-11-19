@@ -1,5 +1,6 @@
 
 import sys
+import numpy as np
 from PySide6.QtWidgets import (
     QApplication,
     QWidget,
@@ -107,13 +108,33 @@ class MainWindow(QWidget):
         self.figure.clear()
         axis = self.figure.add_subplot(111)
 
-        example_temperatures = [10, 15, 20, 25, 30]
-        example_profits = [100, 180, 260, 320, 400]
-        axis.plot(example_temperatures, example_profits)
+    #---------- גרף פיזור ----------
+        axis.scatter(self.temperatures, self.profits, s=1)
 
+#---------- קו מגמה ----------
+        if len(self.temperatures) > 1:
+            m, b = np.polyfit(self.temperatures, self.profits, 1)
+
+            x1 = min(self.temperatures)
+            x2 = max(self.temperatures)
+
+            y1 = m * x1 + b
+            y2 = m * x2 + b
+
+            axis.plot([x1, x2], [y1, y2], color="red", label=f"y = {m:.2f}x {b:+.2f}")
+
+            axis.legend()
+
+    #---------- כותרות הגרף ----------
         axis.set_xlabel("Temperature")
-        axis.set_ylabel("Profit")
-        axis.set_title("Ice Cream Profits")
+        axis.set_ylabel("Revenue")
+        axis.set_title("Ice Cream Revenue vs Temperature")
+
+    #---------- הסרת מסגרות ----------
+        axis.spines["top"].set_visible(False)
+        axis.spines["right"].set_visible(False)
+
+    #---------- עדכון הגרף ----------
         self.figure.tight_layout()
         self.canvas.draw()
     #-------------------------------
