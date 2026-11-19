@@ -83,8 +83,22 @@ class MainWindow(QWidget):
 
     #---------- טעינת נתונים ----------
     def load_csv_data(self):
-        # TODO: Read and process the selected CSV file.
-        pass
+        self.temperatures = []
+        self.profits = []
+
+        with open(self.selected_file_path, 'r') as f:
+            next(f)
+
+            for line in f:
+                temperature, profit = line.strip().split(',')
+                self.temperatures.append(float(temperature))
+                self.profits.append(int(profit))
+
+        print("Rows loaded:", len(self.temperatures))
+        print("Temperatures:", self.temperatures[:3])
+        print("Profits:", self.profits[:3])
+
+        self.draw_plot()
     #----------------------------------
 
 
