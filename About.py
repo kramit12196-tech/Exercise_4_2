@@ -12,7 +12,7 @@ class AboutWindow(QWidget):
 
         #---------- הגדרות חלון אודות ----------
         self.setWindowTitle("About")
-        self.setFixedSize(390, 520)
+        self.setFixedSize(390, 620)
         self.setStyleSheet("background-color: #202734;")
 
         self.layout = QVBoxLayout()
@@ -96,11 +96,11 @@ class AboutWindow(QWidget):
 
         #---------- כרטיס פרויקטים ----------
         self.projects_card = QWidget()
-        self.projects_card.setFixedHeight(150)
+        self.projects_card.setFixedHeight(205)
         self.projects_card.setStyleSheet("background-color: #2B394D; border-radius: 10px;")
 
         self.projects_layout = QVBoxLayout()
-        self.projects_layout.setSpacing(6)
+        self.projects_layout.setSpacing(4)
         self.projects_layout.setContentsMargins(12, 8, 12, 8)
 
         self.projects_title = QLabel("Developer Projects")
@@ -118,26 +118,42 @@ class AboutWindow(QWidget):
         self.ex4_label.setStyleSheet("color: white; font-size: 12px; background: transparent;")
         self.projects_layout.addWidget(self.ex4_label)
 
+        self.github41_icon = QLabel("GH")
+        self.github41_icon.setFixedSize(22, 22)
+        self.github41_icon.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.github41_icon.setStyleSheet("color: white; background-color: #24292F; font-size: 10px; font-weight: bold; border-radius: 3px;")
+
+        self.github41_label = QLabel('<a href="https://github.com/kramit12196-tech/-Exercise_4_1" style="color:#85C6FF;">GitHub - Exercise 4.1</a>')
+        self.github41_label.setOpenExternalLinks(True)
+        self.github41_label.setStyleSheet("background: transparent;")
+
+        self.github41_row = QHBoxLayout()
+        self.github41_row.addStretch()
+        self.github41_row.addWidget(self.github41_icon)
+        self.github41_row.addWidget(self.github41_label)
+        self.github41_row.addStretch()
+        self.projects_layout.addLayout(self.github41_row)
+
         self.ex42_label = QLabel("Exercise 4.2: Ice Cream Profits")
         self.ex42_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.ex42_label.setStyleSheet("color: white; font-size: 12px; background: transparent;")
         self.projects_layout.addWidget(self.ex42_label)
 
-        self.github_icon = QLabel("GH")
-        self.github_icon.setFixedSize(22, 22)
-        self.github_icon.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.github_icon.setStyleSheet("color: white; background-color: #24292F; font-size: 10px; font-weight: bold; border-radius: 3px;")
+        self.github42_icon = QLabel("GH")
+        self.github42_icon.setFixedSize(22, 22)
+        self.github42_icon.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.github42_icon.setStyleSheet("color: white; background-color: #24292F; font-size: 10px; font-weight: bold; border-radius: 3px;")
 
-        self.github_label = QLabel('<a href="https://github.com/kramit12196-tech/-Exercise_4_1" style="color:#85C6FF;">GitHub - Exercise 4.1</a>')
-        self.github_label.setOpenExternalLinks(True)
-        self.github_label.setStyleSheet("background: transparent;")
+        self.github42_label = QLabel('<a href="https://github.com/kramit12196-tech/Exercise_4_2" style="color:#85C6FF;">GitHub - Exercise 4.2</a>')
+        self.github42_label.setOpenExternalLinks(True)
+        self.github42_label.setStyleSheet("background: transparent;")
 
-        self.github_row = QHBoxLayout()
-        self.github_row.addStretch()
-        self.github_row.addWidget(self.github_icon)
-        self.github_row.addWidget(self.github_label)
-        self.github_row.addStretch()
-        self.projects_layout.addLayout(self.github_row)
+        self.github42_row = QHBoxLayout()
+        self.github42_row.addStretch()
+        self.github42_row.addWidget(self.github42_icon)
+        self.github42_row.addWidget(self.github42_label)
+        self.github42_row.addStretch()
+        self.projects_layout.addLayout(self.github42_row)
 
         self.projects_card.setLayout(self.projects_layout)
         self.layout.addWidget(self.projects_card)
