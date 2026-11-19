@@ -10,6 +10,7 @@ from PySide6.QtWidgets import (
     QPushButton,
     QFileDialog,
 )
+from PySide6.QtWidgets import QStyle
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure
 
@@ -77,6 +78,16 @@ class MainWindow(QWidget):
         self.toolbar = NavigationToolbar2QT(self.canvas, self)
         self.toolbar.setObjectName("graphToolbar")
         self.toolbar.setMovable(False)
+        self.toolbar.format_coord = lambda x, y: ""
+        reset_icon = self.style().standardIcon(QStyle.StandardPixmap.SP_BrowserReload)
+
+        for action in self.toolbar.actions():
+            if action.text() == "Home":
+                action.setIcon(reset_icon)
+                action.setToolTip("Reset Graph View")
+                action.setStatusTip("Reset Graph View")
+                break
+
         self.canvas.setObjectName("graphCanvas")
 
         main_layout.addWidget(self.toolbar)
@@ -85,6 +96,54 @@ class MainWindow(QWidget):
 
         self.setLayout(main_layout)
         self.draw_plot()
+
+    #---------- תיבת קואורדינטות ----------
+    def setup_coordinate_tooltip(self):
+        if not hasattr(self, "_coordinate_event_cid"):
+            self._coordinate_event_cid = self.canvas.mpl_connect(
+                "motion_notify_event",
+                self.update_mouse_coordinates,
+            )
+
+        axis = self.figure.axes[0]
+        annotation_is_on_axis = (
+            hasattr(self, "coordinate_annotation")
+            and self.coordinate_annotation in axis.texts
+        )
+
+        if not annotation_is_on_axis:
+            self.coordinate_annotation = axis.annotate(
+                "",
+                xy=(0, 0),
+                xytext=(12, 12),
+                textcoords="offset points",
+                bbox={
+                    "boxstyle": "round,pad=0.35",
+                    "facecolor": "#FFFFFF",
+                    "edgecolor": "#C7D5DB",
+                    "linewidth": 0.8,
+                },
+                fontsize=9,
+                color="#263238",
+                visible=False,
+            )
+
+    def update_mouse_coordinates(self, event):
+        if event.inaxes is None or event.xdata is None or event.ydata is None:
+            if hasattr(self, "coordinate_annotation"):
+                if self.coordinate_annotation.get_visible():
+                    self.coordinate_annotation.set_visible(False)
+                    self.canvas.draw_idle()
+            return
+
+        if hasattr(self, "coordinate_annotation"):
+            self.coordinate_annotation.set_text(
+                f"X: {event.xdata:.2f} | Y: {event.ydata:.2f}"
+            )
+            self.coordinate_annotation.xy = (event.xdata, event.ydata)
+            self.coordinate_annotation.set_visible(True)
+            self.canvas.draw_idle()
+    #--------------------------------------
 
     #---------- בחירת קובץ ----------
     def load_csv_file(self):
@@ -184,6 +243,9 @@ class MainWindow(QWidget):
     #---------- עדכון הגרף ----------
         self.figure.tight_layout()
         self.canvas.draw()
+        if hasattr(self, "toolbar"):
+            self.toolbar.push_current()
+        self.setup_coordinate_tooltip()
     #-------------------------------
 
 #---------- Run Application ----------
